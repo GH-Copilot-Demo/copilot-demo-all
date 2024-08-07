@@ -1,0 +1,4 @@
+customerID, transactionID, transactionDate, amount, merchantName
+1, 1, 2018-01-01, 100, merchant1
+2, 2, 2018-01-01, 100, merchant1
+3, 3, 2018-01-01, 100, merchant1

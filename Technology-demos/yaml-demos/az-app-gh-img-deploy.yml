@@ -1,0 +1,54 @@
+name: GH Image Deploy
+on:
+  workflow_dispatch:
+ # pull_request:
+  #  paths:
+   #   - 'PetShop/**'
+      
+permissions:
+  id-token: write
+  contents: read
+
+jobs:    
+    deploy-dev:       
+       runs-on: ubuntu-latest
+       steps:
+        
+        - name: 'Login via Azure CLI'
+          uses: azure/login@v1
+          with:
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}        
+         
+        - name: Set Web App GHCR authentication
+          uses: Azure/appservice-settings@v1
+          with:
+             app-name: 'petshop-dev'
+             app-settings-json: |
+                 [
+                     {
+                         "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                         "value": "${{ secrets.GH_TOKEN }}",
+                         "slotSetting": false
+                     },
+                     {
+                         "name": "DOCKER_REGISTRY_SERVER_URL",
+                         "value": "https://ghcr.io/${{ github.repository }}",
+                         "slotSetting": false
+                     },
+                     {
+                         "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                         "value": "${{ github.actor }}",
+                         "slotSetting": false
+                     }
+                 ]
+        
+        - uses: azure/webapps-deploy@v2
+          with:
+            app-name: 'petshop-dev'
+            images: ghcr.io/${{ github.repository }}:latest
+            
+        - name: Azure logout
+          run: |
+            az logout

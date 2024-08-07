@@ -1,0 +1,4 @@
+customerID,EnglishName,ChineseName,Gender,BirthOfDate,Address,Email,ContactNumber
+1,John,John,1,1990-01-01,Address1,john@xx.com,12345678
+2,David,David,1,1990-01-02,Address2, david@xxx.com,12345678
+3,Jack,Jack,1,1990-01-03,Address3,jack@xx.com,12345678

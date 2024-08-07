@@ -1,0 +1,37 @@
+{
+    "name": "spring-boot-app",
+    "image": "mcr.microsoft.com/vscode/devcontainers/java:11-bullseye",
+
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "settings": { 
+            },
+            
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "vscjava.vscode-gradle",
+                "GitHub.copilot",
+                "ms-azuretools.vscode-docker"
+            ]
+        },
+        "codespaces": {
+            "openFiles": [
+              "App-demos/java-spring-boot-app/src/main/java/com/demo/contacts/ContactController.java",
+              "App-demos/java-spring-boot-app/src/test/java/com/demo/contacts/ControllerIntegrationTest.java",
+              "App-demos/java-spring-boot-app/src/main/java/com/demo/contacts/repositories/ContactRepository.java",
+              "App-demos/java-spring-boot-app/src/main/java/com/demo/contacts/model/Contact.java"
+            ]
+        }
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "none",
+            "installGradle": "false",
+            "installMaven": "true"
+        },
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    "postCreateCommand": "cd App-demos/java-spring-boot-app/docker && docker-compose up"
+}
